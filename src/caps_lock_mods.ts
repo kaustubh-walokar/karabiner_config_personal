@@ -6,7 +6,7 @@ export const rules = [
         .manipulators([
             map('caps_lock')
                 .toHyper()
-                .toIfAlone('escape'),
+                .toIfAlone('escape')
             // map('caps_lock', 'shift')
             //     .to('caps_lock')
         ])

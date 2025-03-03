@@ -1,5 +1,7 @@
 import { writeToProfile } from "karabiner.ts"
 import { rules as caps_lock_mods } from "./caps_lock_mods"
+import { rules as tab_mods } from "./tab_mods"
+
 const params = {
     'basic.to_if_alone_timeout_milliseconds': 1000,
     'basic.to_if_held_down_threshold_milliseconds': 500,
@@ -11,7 +13,8 @@ const params = {
 }
 
 const all_mods = [
-    ...caps_lock_mods 
+    ...caps_lock_mods,
+    ...tab_mods
 ]
 
 const target = process.env.WRITE_TARGET;
@@ -19,5 +22,5 @@ const target = process.env.WRITE_TARGET;
 if (target) {
     writeToProfile(target , all_mods, params)
 } else {
-    console.error("MY_PARAM environment variable not set.");
+    console.error("WRITE_TARGET environment variable not set.");
 }
