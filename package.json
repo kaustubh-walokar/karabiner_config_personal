@@ -1,6 +1,6 @@
 {
-  "name": "karabiner.ts.examples",
-  "description": "Examples for using karabiner.ts",
+  "name": "karabiner.mods.kw",
+  "description": "Personal modifications for Karabiner-Elements",
   "license": "MIT",
   "scripts": {
     "build": "WRITE_TARGET='--dry-run' tsx src/all_mods.ts",

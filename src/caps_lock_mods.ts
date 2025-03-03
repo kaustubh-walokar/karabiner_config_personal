@@ -5,14 +5,10 @@ export const rules = [
         .description('Caps Lock is escape if pressed alone or hyper when pressed with modifier.')
         .manipulators([
             map('caps_lock')
-            .toHyper()
-            .toIfAlone('escape')
-        ]),
-    rule('Shift + Caps Lock → Caps Lock')
-        .description('Caps Lock is capslock if pressed with shift.')
-        .manipulators([
-            map('caps_lock', 'shift')
-            .to('caps_lock')
+                .toHyper()
+                .toIfAlone('escape'),
+            // map('caps_lock', 'shift')
+            //     .to('caps_lock')
         ])
 ]
 

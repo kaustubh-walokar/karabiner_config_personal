@@ -17,7 +17,7 @@ const all_mods = [
 const target = process.env.WRITE_TARGET;
 
 if (target) {
-    writeToProfile("--dry-run" , all_mods, params)
+    writeToProfile(target , all_mods, params)
 } else {
     console.error("MY_PARAM environment variable not set.");
 }
