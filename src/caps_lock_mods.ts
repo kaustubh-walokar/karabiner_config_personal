@@ -1,4 +1,4 @@
-import { rule, map } from "karabiner.ts"
+import { rule, map, simlayer } from "karabiner.ts"
 
 export const rules = [
     rule('Caps Lock → Hyper/Escape')
@@ -8,7 +8,7 @@ export const rules = [
                 .toHyper()
                 .toIfAlone('escape'),
         ]),
-    rule('Open Apps with Hyper')
+    simlayer('o', 'Open Apps with Hyper')
         .description('Open Apps with Hyper')
         .manipulators([
             map('a', 'Hyper').to$(`open -a "Google Chrome"`),

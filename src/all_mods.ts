@@ -9,7 +9,7 @@ const params = {
     'basic.to_delayed_action_delay_milliseconds': 500,
     'basic.simultaneous_threshold_milliseconds': 50,
     'mouse_motion_to_scroll.speed': 100,
-    'simlayer.threshold_milliseconds': 200,
+    'simlayer.threshold_milliseconds': 500,
     'double_tap.delay_milliseconds': 200,
 }
 
