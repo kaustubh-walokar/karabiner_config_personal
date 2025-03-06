@@ -1,6 +1,7 @@
 import { writeToProfile } from "karabiner.ts"
 import { rules as caps_lock_mods } from "./caps_lock_mods"
 import { rules as tab_mods } from "./tab_mods"
+import { rules as fn_5_mute } from "./fn_5_mute"
 
 const params = {
     'basic.to_if_alone_timeout_milliseconds': 1000,
@@ -14,7 +15,8 @@ const params = {
 
 const all_mods = [
     ...caps_lock_mods,
-    ...tab_mods
+    ...tab_mods,
+    ...fn_5_mute,
 ]
 
 const target = process.env.WRITE_TARGET;

@@ -6,10 +6,17 @@ export const rules = [
         .manipulators([
             map('caps_lock')
                 .toHyper()
-                .toIfAlone('escape')
-            // map('caps_lock', 'shift')
-            //     .to('caps_lock')
-        ])
+                .toIfAlone('escape'),
+        ]),
+    rule('Open Apps with Hyper')
+        .description('Open Apps with Hyper')
+        .manipulators([
+            map('a', 'Hyper').to$(`open -a "Google Chrome"`),
+            map('s', 'Hyper').to$(`open -a "Slack"`),
+            map('t', 'Hyper').to$(`open -a "iTerm"`),
+            map('v', 'Hyper').to$(`open -a "Visual Studio Code"`),
+            map('w', 'Hyper').to$(`open -a "WhatsApp"`),
+        ]),
 ]
 
 
