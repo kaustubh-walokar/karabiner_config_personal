@@ -11,11 +11,10 @@ export const rules = [
     simlayer('o', 'Open Apps with Hyper')
         .description('Open Apps with Hyper')
         .manipulators([
-            map('a', 'Hyper').to$(`open -a "Google Chrome"`),
+            map('b', 'Hyper').to$(`open -a "Firefox"`),
             map('s', 'Hyper').to$(`open -a "Slack"`),
-            map('t', 'Hyper').to$(`open -a "iTerm"`),
-            map('v', 'Hyper').to$(`open -a "Visual Studio Code"`),
-            map('w', 'Hyper').to$(`open -a "WhatsApp"`),
+            map('t', 'Hyper').to$(`open -a "Ghostty"`),
+            map('i', 'Hyper').to$(`open -a "IntelliJ IDEA Ultimate"`),
         ]),
 ]
 
