@@ -5,7 +5,9 @@
   "scripts": {
     "build": "WRITE_TARGET='--dry-run' tsx src/all_mods.ts",
     "deploy": "WRITE_TARGET='KW' tsx src/all_mods.ts",
-    "update": "npm update karabiner.ts"
+    "update": "npm update karabiner.ts",
+    "format": "prettier --write .",
+    "prebuild": "npm run format"
   },
   "devDependencies": {
     "@types/node": "^20",
