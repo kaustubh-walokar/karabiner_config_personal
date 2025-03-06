@@ -9,4 +9,5 @@ module.exports = {
   semi: false,
   trailingComma: 'all',
   bracketSameLine: true,
+  files: '**/*.ts',
 }
