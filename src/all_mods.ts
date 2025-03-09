@@ -1,4 +1,9 @@
-import { writeToProfile } from 'karabiner.ts'
+import {
+  importProfile,
+  KarabinerConfig,
+  Rule,
+  writeToProfile,
+} from 'karabiner.ts'
 import { rules as caps_lock_mods } from './caps_lock_mods'
 import { rules as tab_mods } from './tab_mods'
 import { rules as fn_5_mute } from './fn_5_mute'
@@ -16,9 +21,15 @@ const params = {
 const all_mods = [...caps_lock_mods, ...tab_mods, ...fn_5_mute]
 
 const target = process.env.WRITE_TARGET
+const skipImported = process.env.SKIP_IMPORTED === 'true'
 
+const importedDefaultProfile = importProfile('Default profile') // imports the default profile. I use tis to import other user's mods from the internet
 if (target) {
-  writeToProfile(target, all_mods, params)
+  writeToProfile(
+    target,
+    [...(skipImported ? [] : [importedDefaultProfile]), ...all_mods],
+    params,
+  )
 } else {
   console.error('WRITE_TARGET environment variable not set.')
 }

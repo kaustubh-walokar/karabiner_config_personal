@@ -3,8 +3,8 @@
   "description": "Personal modifications for Karabiner-Elements",
   "license": "MIT",
   "scripts": {
-    "build": "WRITE_TARGET='--dry-run' tsx src/all_mods.ts",
-    "deploy": "WRITE_TARGET='KW' tsx src/all_mods.ts",
+    "build": "WRITE_TARGET='--dry-run' tsx src/all_mods.ts || WRITE_TARGET='--dry-run' SKIP_IMPORTED='true' tsx src/all_mods.ts",
+    "deploy": "WRITE_TARGET='KW' tsx src/all_mods.ts || WRITE_TARGET='KW' SKIP_IMPORTED='true' tsx src/all_mods.ts",
     "update": "npm update karabiner.ts",
     "format": "prettier --write .",
     "prebuild": "npm run format"
