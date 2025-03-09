@@ -15,7 +15,7 @@ export const rules = [
     .manipulators([map('caps_lock').toHyper().toIfAlone('escape')]),
   hyperLayer('o', 'Open Apps with Hyper')
     .description('Open Apps with Hyper')
-    .leaderMode()
+    .leaderMode({ escape: ['escape', 'spacebar', 'caps_lock', 'o']})
     .notification('Hyper Active')
     .manipulators({
       // communication
