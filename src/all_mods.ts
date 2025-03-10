@@ -6,7 +6,7 @@ import { rules as home_row_mods } from "./home_row_mods";
 
 const params = {
   "basic.to_if_alone_timeout_milliseconds": 1000,
-  "basic.to_if_held_down_threshold_milliseconds": 500,
+  "basic.to_if_held_down_threshold_milliseconds": 150,
   "basic.to_delayed_action_delay_milliseconds": 500,
   "basic.simultaneous_threshold_milliseconds": 50,
   "mouse_motion_to_scroll.speed": 100,
