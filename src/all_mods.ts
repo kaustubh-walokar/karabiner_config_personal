@@ -1,35 +1,36 @@
-import {
-  importProfile,
-  KarabinerConfig,
-  Rule,
-  writeToProfile,
-} from 'karabiner.ts'
-import { rules as caps_lock_mods } from './caps_lock_mods'
-import { rules as tab_mods } from './tab_mods'
-import { rules as fn_5_mute } from './fn_5_mute'
+import { importProfile, writeToProfile } from "karabiner.ts";
+import { rules as caps_lock_mods } from "./caps_lock_mods";
+import { rules as tab_mods } from "./tab_mods";
+import { rules as fn_5_mute } from "./fn_5_mute";
+import { rules as home_row_mods } from "./home_row_mods";
 
 const params = {
-  'basic.to_if_alone_timeout_milliseconds': 1000,
-  'basic.to_if_held_down_threshold_milliseconds': 500,
-  'basic.to_delayed_action_delay_milliseconds': 500,
-  'basic.simultaneous_threshold_milliseconds': 50,
-  'mouse_motion_to_scroll.speed': 100,
-  'simlayer.threshold_milliseconds': 500,
-  'double_tap.delay_milliseconds': 200,
-}
+  "basic.to_if_alone_timeout_milliseconds": 1000,
+  "basic.to_if_held_down_threshold_milliseconds": 500,
+  "basic.to_delayed_action_delay_milliseconds": 500,
+  "basic.simultaneous_threshold_milliseconds": 50,
+  "mouse_motion_to_scroll.speed": 100,
+  "simlayer.threshold_milliseconds": 500,
+  "double_tap.delay_milliseconds": 200,
+};
 
-const all_mods = [...caps_lock_mods, ...tab_mods, ...fn_5_mute]
+const all_mods = [
+  ...caps_lock_mods,
+  ...tab_mods,
+  ...fn_5_mute,
+  ...home_row_mods,
+];
 
-const target = process.env.WRITE_TARGET
-const skipImported = process.env.SKIP_IMPORTED === 'true'
+const target = process.env.WRITE_TARGET;
+const skipImported = process.env.SKIP_IMPORTED === "true";
 
-const importedDefaultProfile = importProfile('Default profile') // imports the default profile. I use tis to import other user's mods from the internet
+const importedDefaultProfile = importProfile("Default profile"); // imports the default profile. I use tis to import other user's mods from the internet
 if (target) {
   writeToProfile(
     target,
     [...(skipImported ? [] : [importedDefaultProfile]), ...all_mods],
-    params,
-  )
+    params
+  );
 } else {
-  console.error('WRITE_TARGET environment variable not set.')
+  console.error("WRITE_TARGET environment variable not set.");
 }
