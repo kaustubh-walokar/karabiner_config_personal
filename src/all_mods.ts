@@ -24,11 +24,10 @@ const all_mods = [
 const target = process.env.WRITE_TARGET;
 const skipImported = process.env.SKIP_IMPORTED === "true";
 
-const importedDefaultProfile = importProfile("Default profile"); // imports the default profile. I use tis to import other user's mods from the internet
 if (target) {
   writeToProfile(
     target,
-    [...(skipImported ? [] : [importedDefaultProfile]), ...all_mods],
+    [...(skipImported ? [] : [importProfile("Default profile")]), ...all_mods],
     params
   );
 } else {
