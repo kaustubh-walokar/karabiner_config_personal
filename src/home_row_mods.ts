@@ -7,7 +7,7 @@ import {
   ToKeyCode,
 } from "karabiner.ts";
 
-const modifierMappings: Record<FromAndToKeyCode, ToKeyCode> = {
+const modifierMappings: Partial<Record<FromAndToKeyCode, ToKeyCode>> = {
   // spacebar: "left_shift",
   d: "left_command",
   k: "right_command",
