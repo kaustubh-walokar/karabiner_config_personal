@@ -7,25 +7,29 @@ import {
   ToKeyCode,
 } from "karabiner.ts";
 
-const mappings: HomeRowModifications[] = [
-  { from: "spacebar", to: "left_shift" },
+const modifierMappings: Record<FromAndToKeyCode, ToKeyCode> = {
+  spacebar: "left_shift",
+  f: "left_command",
+  j: "right_command",
 
-  { from: "f", to: "left_command" },
-  { from: "j", to: "right_command" },
+  d: "left_option",
+  k: "right_option",
 
-  { from: "d", to: "left_option" },
-  { from: "k", to: "right_option" },
+  s: "left_control",
+  l: "right_control",
 
-  { from: "s", to: "left_control" },
-  { from: "l", to: "right_control" },
-
-  { from: "a", to: "left_shift" },
-  { from: "semicolon", to: "right_shift" },
-];
+  a: "left_shift",
+  semicolon: "right_shift",
+};
 
 export const rules = [
-  rule(`HomeRow and Spacebar modifications`).manipulators(
-    mappings.map((x) => ruleForCharToModifier(x))
+  rule(`HomeRow and Spacebar modifications one at a time`).manipulators(
+    Object.entries(modifierMappings).map(([from, to]) =>
+      ruleForCharToModifier({
+        from: from as FromAndToKeyCode,
+        to: to as ToKeyCode,
+      })
+    )
   ),
 ];
 
