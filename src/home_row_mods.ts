@@ -8,18 +8,18 @@ import {
 } from "karabiner.ts";
 
 const modifierMappings: Record<FromAndToKeyCode, ToKeyCode> = {
-  spacebar: "left_shift",
-  f: "left_command",
-  j: "right_command",
+  // spacebar: "left_shift",
+  d: "left_command",
+  k: "right_command",
 
-  d: "left_option",
-  k: "right_option",
+  s: "left_option",
+  l: "right_option",
 
-  s: "left_control",
-  l: "right_control",
+  a: "left_control",
+  semicolon: "right_control",
 
-  a: "left_shift",
-  semicolon: "right_shift",
+  f: "left_shift",
+  j: "right_shift",
 };
 
 export const rules = [
