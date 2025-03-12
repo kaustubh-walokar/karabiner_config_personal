@@ -21,5 +21,7 @@ export const rules = [
       t: toApp("Ghostty"),
       v: toApp("Visual Studio Code"),
       i: toApp("IntelliJ IDEA Ultimate"),
+      // productivity
+      n: toApp("Obsidian"),
     }),
 ];

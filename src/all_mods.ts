@@ -8,7 +8,7 @@ const params = {
   "basic.to_if_alone_timeout_milliseconds": 1000,
   "basic.to_if_held_down_threshold_milliseconds": 150,
   "basic.to_delayed_action_delay_milliseconds": 500,
-  "basic.simultaneous_threshold_milliseconds": 50,
+  "basic.simultaneous_threshold_milliseconds": 70,
   "mouse_motion_to_scroll.speed": 100,
   "simlayer.threshold_milliseconds": 500,
   "double_tap.delay_milliseconds": 200,
