@@ -18,7 +18,7 @@ const all_mods = [
   ...caps_lock_mods,
   ...tab_mods,
   ...fn_5_mute,
-  ...home_row_mods,
+  // ...home_row_mods,
 ];
 
 const target = process.env.WRITE_TARGET;
