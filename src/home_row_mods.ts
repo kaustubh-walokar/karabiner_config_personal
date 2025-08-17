@@ -1,9 +1,4 @@
-import {
-  map,
-  mapSimultaneous,
-  rule,
-  toKey,
-} from "karabiner.ts";
+import { map, mapSimultaneous, rule, toKey } from "karabiner.ts";
 
 export const rules = [
   // https://github.com/Erlendms/karabiner-actions/blob/main/my-index.ts#L57
