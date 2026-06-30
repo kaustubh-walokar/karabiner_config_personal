@@ -16,6 +16,19 @@ This is the examples/starter repo to get started with [karabiner.ts](https://git
 4. Set the profile name. Create a new Karabiner-Elements profile if needed.
 5. Run `npm run build`.
 
+### Hyper-layer HUD (Hammerspoon)
+
+The Hyper (⇪ + `o`) app launcher shows a Hammerspoon HUD instead of the
+built-in Karabiner notification.
+
+1. `brew install --cask hammerspoon`, open it once, grant Accessibility.
+2. `npm run install-hud` — symlinks `~/.hammerspoon/init.lua` to
+   [`hammerspoon/init.lua`](./hammerspoon/init.lua) (backs up any existing file).
+3. `npm run deploy`.
+
+`npm run deploy` is gated and fails unless Hammerspoon is set up. To skip the
+HUD and use the built-in notification box: `KW_NOTIFY=native npm run deploy`.
+
 ### Update karabiner.ts
 
 Run `npm run update` to update `karabiner.ts` to latest version.
