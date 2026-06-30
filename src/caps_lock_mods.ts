@@ -9,18 +9,23 @@ export const rules = [
   hyperLayer("o", "Open Apps with Hyper")
     .description("Open Apps with Hyper")
     .leaderMode({ escape: ["escape", "spacebar", "caps_lock", "o"] })
-    .notification("Hyper Active")
+    .notification(
+      [
+        "🚀  HYPER LAYER",
+        "b → Vivaldi     c → Cursor     s → Slack     z → Zoom",
+        "e → Mail        t → Warp       v → Code      n → Obsidian",
+      ].join("\n")
+    )
     .manipulators({
       // communication
-      b: toApp("Firefox"),
+      b: toApp("Vivaldi"),
       s: toApp("Slack"),
-      c: toApp("Amazon Chime"),
       z: toApp("Zoom"),
       e: toApp("Microsoft Outlook"),
       // development
-      t: toApp("Ghostty"),
+      c: toApp("Cursor"),
+      t: toApp("Warp"),
       v: toApp("Visual Studio Code"),
-      i: toApp("IntelliJ IDEA Ultimate"),
       // productivity
       n: toApp("Obsidian"),
     }),
