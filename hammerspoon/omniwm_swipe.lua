@@ -17,7 +17,7 @@ local props = ev.properties
 
 -- Configuration --------------------------------------------------------------
 local NATURAL_SCROLLING = true -- content follows the hand: drag right -> focus left
-local TRIGGER_PX = 60 -- horizontal motion that fires the gesture
+local TRIGGER_PX = 25 -- horizontal motion that fires the gesture
 local CLICK_SLOP = 5 -- max total motion for a release to still count as a click
 local OMNIWMCTL = "/Applications/OmniWM.app/Contents/MacOS/omniwmctl"
 --------------------------------------------------------------------------------
