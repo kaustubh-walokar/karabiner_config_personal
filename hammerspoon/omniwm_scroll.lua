@@ -1,6 +1,7 @@
--- Middle-button drag steps OmniWM focus through its CLI: drag left runs
--- `omniwmctl command focus left`, drag right `focus right`, one step per
--- STEP_PX of horizontal motion. The CLI (IPC) path is preferred over
+-- Middle-button swipe steps OmniWM focus through its CLI: swipe left runs
+-- `omniwmctl command focus left`, swipe right `focus right`. One gesture =
+-- one step: the first STEP_PX of horizontal motion fires, then the gesture
+-- latches until the button is released. The CLI (IPC) path is preferred over
 -- synthetic Alt+H/L keystrokes so nothing can leak into the focused app,
 -- and it works on niri and dwindle workspaces alike. Requires
 -- general.ipcEnabled = true in OmniWM's settings.toml.
@@ -22,7 +23,7 @@ local function focusStep(direction)
   hs.task.new(CTL, nil, { "command", "focus", direction }):start()
 end
 
-local drag = { active = false, dist = 0, acc = 0 }
+local drag = { active = false, dist = 0, acc = 0, fired = false }
 
 local tap = hs.eventtap.new(
   { types.otherMouseDown, types.otherMouseUp, types.otherMouseDragged },
@@ -38,6 +39,7 @@ local tap = hs.eventtap.new(
       drag.active = true
       drag.dist = 0
       drag.acc = 0
+      drag.fired = false
       return true
     end
     if t == types.otherMouseDragged and drag.active then
@@ -45,13 +47,14 @@ local tap = hs.eventtap.new(
       local dy = e:getProperty(props.mouseEventDeltaY)
       drag.dist = drag.dist + math.abs(dx) + math.abs(dy)
       drag.acc = drag.acc + dx
-      while drag.acc >= STEP_PX do
-        focusStep("right")
-        drag.acc = drag.acc - STEP_PX
-      end
-      while drag.acc <= -STEP_PX do
-        focusStep("left")
-        drag.acc = drag.acc + STEP_PX
+      if not drag.fired then
+        if drag.acc >= STEP_PX then
+          focusStep("right")
+          drag.fired = true
+        elseif drag.acc <= -STEP_PX then
+          focusStep("left")
+          drag.fired = true
+        end
       end
       return true
     end
