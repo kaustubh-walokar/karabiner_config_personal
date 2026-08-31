@@ -1,11 +1,9 @@
--- Middle-button drag scrolls OmniWM's niri column strip, standing in for the
--- three-finger trackpad swipe on a mouse.
---
--- OmniWM cannot see synthetic multitouch (it reads raw trackpad hardware), but
--- its mouse-wheel path accepts scroll events carrying the
--- gestures.scrollModifierKey modifiers (Option+Shift here), horizontal delta
--- preferred, one column step per ~120 px. So: swallow middle-button drags and
--- repost the motion as modifier-tagged pixel scroll events.
+-- Middle-button drag steps OmniWM focus through its CLI: drag left runs
+-- `omniwmctl command focus left`, drag right `focus right`, one step per
+-- STEP_PX of horizontal motion. The CLI (IPC) path is preferred over
+-- synthetic Alt+H/L keystrokes so nothing can leak into the focused app,
+-- and it works on niri and dwindle workspaces alike. Requires
+-- general.ipcEnabled = true in OmniWM's settings.toml.
 --
 -- A quick middle press without motion is reposted as a normal middle click,
 -- tagged so this tap ignores its own synthetic events. Trade-off: apps that
@@ -15,13 +13,16 @@ local ev = hs.eventtap.event
 local types = ev.types
 local props = ev.properties
 
-local SPEED = 1.0 -- mouse px -> scroll px; OmniWM steps one column per ~120
-local INVERT = false -- flip if the strip moves opposite to your drag
+local STEP_PX = 60 -- horizontal pixels of drag per focus step
 local CLICK_SLOP = 5 -- max px of motion for a release to still count as a click
-local SCROLL_MODS = { "alt", "shift" } -- OmniWM gestures.scrollModifierKey = optionShift
 local SYNTH_TAG = 0x0771 -- marks our reposted clicks
+local CTL = "/Applications/OmniWM.app/Contents/MacOS/omniwmctl"
 
-local drag = { active = false, dist = 0 }
+local function focusStep(direction)
+  hs.task.new(CTL, nil, { "command", "focus", direction }):start()
+end
+
+local drag = { active = false, dist = 0, acc = 0 }
 
 local tap = hs.eventtap.new(
   { types.otherMouseDown, types.otherMouseUp, types.otherMouseDragged },
@@ -36,15 +37,22 @@ local tap = hs.eventtap.new(
     if t == types.otherMouseDown then
       drag.active = true
       drag.dist = 0
+      drag.acc = 0
       return true
     end
     if t == types.otherMouseDragged and drag.active then
       local dx = e:getProperty(props.mouseEventDeltaX)
       local dy = e:getProperty(props.mouseEventDeltaY)
       drag.dist = drag.dist + math.abs(dx) + math.abs(dy)
-      local sign = INVERT and -1 or 1
-      -- offsets are {horizontal, vertical}, verified by probing axis2/axis1
-      ev.newScrollEvent({ sign * dx * SPEED, sign * dy * SPEED }, SCROLL_MODS, "pixel"):post()
+      drag.acc = drag.acc + dx
+      while drag.acc >= STEP_PX do
+        focusStep("right")
+        drag.acc = drag.acc - STEP_PX
+      end
+      while drag.acc <= -STEP_PX do
+        focusStep("left")
+        drag.acc = drag.acc + STEP_PX
+      end
       return true
     end
     if t == types.otherMouseUp then
