@@ -48,11 +48,12 @@ local tap = hs.eventtap.new(
       drag.dist = drag.dist + math.abs(dx) + math.abs(dy)
       drag.acc = drag.acc + dx
       if not drag.fired then
+        -- natural direction: content follows the hand, like a trackpad swipe
         if drag.acc >= STEP_PX then
-          focusStep("right")
+          focusStep("left")
           drag.fired = true
         elseif drag.acc <= -STEP_PX then
-          focusStep("left")
+          focusStep("right")
           drag.fired = true
         end
       end
