@@ -1,6 +1,7 @@
 import { importProfile, writeToProfile } from "karabiner.ts";
 import { rules as caps_lock_mods } from "./caps_lock_mods";
 import { rules as tab_mods } from "./tab_mods";
+import { rules as omniwm_mods } from "./omniwm_mods";
 import { rules as fn_5_mute } from "./fn_5_mute";
 import { simple_mappings } from "./simple_mods";
 
@@ -18,6 +19,7 @@ const all_mods = [
   ...caps_lock_mods,
   ...fn_5_mute,
   ...simple_mappings,
+  ...omniwm_mods,
   ...tab_mods,
   // ...home_row_mods,
 ];
