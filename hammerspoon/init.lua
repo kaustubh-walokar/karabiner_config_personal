@@ -297,8 +297,21 @@ hs.pathwatcher
   end)
   :start()
 
-hs.alert.show("Hyper HUD loaded")
-
 -- Middle-button mouse gestures (three-finger-swipe stand-in for mice).
 -- Global keeps the eventtap referenced so it survives garbage collection.
 mouseGestures = require("mouse_gestures")
+
+-- Startup toast in the mute-HUD style (bold headline, receding detail,
+-- green dot, top-center card) instead of the stock hs.alert box. Fires
+-- last so it also vouches that every module above loaded cleanly.
+show(
+  hs.styledtext.new("Hammerspoon", {
+    font = { name = UI_BOLD, size = 17 },
+    color = { white = 0.97 },
+  }) .. hs.styledtext.new("   config loaded", {
+    font = { name = UI_FONT, size = 15 },
+    color = { white = 0.62 },
+  }),
+  MUTE_HUD_SECONDS,
+  { dot = GREEN, accent = GREEN, minWidth = 150 }
+)
