@@ -299,6 +299,6 @@ hs.pathwatcher
 
 hs.alert.show("Hyper HUD loaded")
 
--- Middle-button swipe -> OmniWM focus step (three-finger-swipe stand-in for mice).
+-- Middle-button mouse gestures (three-finger-swipe stand-in for mice).
 -- Global keeps the eventtap referenced so it survives garbage collection.
-omniwmSwipe = require("omniwm_swipe")
+mouseGestures = require("mouse_gestures")
