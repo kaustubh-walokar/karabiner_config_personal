@@ -8,6 +8,7 @@
 import { map, rule } from "karabiner.ts";
 
 const CYCLE = "/Users/kaustubw/.config/omniwm/cycle-workspace-monitor.py";
+const SMART_MAX = "/Users/kaustubw/.config/omniwm/smart-maximize.sh";
 
 export const rules = [
   rule("Opt+Shift+Tab → OmniWM workspace to next monitor (wraps)")
@@ -15,5 +16,15 @@ export const rules = [
     .manipulators([
       map("tab", ["option", "shift"]).to$(`${CYCLE} next`),
       map("tab", ["control", "option", "shift"]).to$(`${CYCLE} prev`),
+    ]),
+  // Meh+Space: layout-aware maximize. OmniWM hotkeys cannot branch on the
+  // active layout, so Karabiner routes the key through a script that picks
+  // full-primary-span on niri and overlay fullscreen on dwindle. OmniWM
+  // keeps the same key bound to the span toggle as a fallback for when
+  // Karabiner is not running.
+  rule("Meh+Space → OmniWM layout-aware maximize")
+    .description("Maximize: niri span toggle, dwindle fullscreen")
+    .manipulators([
+      map("spacebar", ["control", "option", "shift"]).to$(`bash ${SMART_MAX}`),
     ]),
 ];
