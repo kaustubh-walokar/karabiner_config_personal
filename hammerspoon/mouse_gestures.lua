@@ -34,6 +34,9 @@ end
 local ACTIONS = {
   focusLeft = omniwm("command", "focus", "left"),
   focusRight = omniwm("command", "focus", "right"),
+  -- OmniWM ignores IPC while Overview is open, so this opens but cannot
+  -- close it; dismiss by clicking a window, Escape, or the hotkey.
+  overview = omniwm("command", "toggle-overview"),
   missionControl = hs.spaces.toggleMissionControl,
   appExpose = hs.spaces.toggleAppExpose, -- all windows of the focused app
 }
@@ -41,7 +44,7 @@ local ACTIONS = {
 local GESTURES = {
   left = NATURAL_SCROLLING and "focusRight" or "focusLeft",
   right = NATURAL_SCROLLING and "focusLeft" or "focusRight",
-  up = "missionControl", -- matches the macOS three-finger trackpad swipe
+  up = "overview", -- OmniWM's present-all-windows, not Mission Control
   down = "appExpose",
 }
 --------------------------------------------------------------------------------
