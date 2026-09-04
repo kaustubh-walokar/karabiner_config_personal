@@ -301,6 +301,9 @@ hs.pathwatcher
 -- Global keeps the eventtap referenced so it survives garbage collection.
 mouseGestures = require("mouse_gestures")
 
+-- Trackpad three-finger swipe gestures (Swipe.spoon based).
+trackpadGestures = require("trackpad_gestures")
+
 -- Startup toast in the mute-HUD style (bold headline, receding detail,
 -- green dot, top-center card) instead of the stock hs.alert box. Fires
 -- last so it also vouches that every module above loaded cleanly.
