@@ -18,7 +18,7 @@ local THRESHOLD = 0.2 -- default fraction of trackpad the swipe must travel
 -- Horizontal three-finger motion is also OmniWM's niri column scroll
 -- (gestures.fingerCount = 3), so left/right demand a much longer swipe:
 -- short swipes scroll columns, a long one switches workspace.
-local LONG_THRESHOLD = 0.6
+local LONG_THRESHOLD = 0.45
 
 -- Returns an action that runs omniwmctl with the given arguments.
 -- Requires general.ipcEnabled = true in OmniWM's settings.toml.
