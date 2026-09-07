@@ -1,4 +1,9 @@
-import { buildHudText, buildManipulators, HyperApp } from "./lib/hyper_layer";
+import {
+  buildDirectManipulators,
+  buildHudText,
+  buildManipulators,
+  HyperApp,
+} from "./lib/hyper_layer";
 
 /**
  * Single source of truth for the Hyper (⇪ + o) app-launcher layer.
@@ -16,6 +21,10 @@ export const hyperApps: HyperApp[] = [
   { key: "n", app: "Obsidian" },
 ];
 
+/** Direct Hyper+key launches (current mode). */
+export const hyperDirectManipulators = buildDirectManipulators(hyperApps);
+
+/** Legacy leader-layer manipulators, kept for an easy way back. */
 export const hyperManipulators = buildManipulators(hyperApps);
 
 /** Title + key→app grid, shared by the Hammerspoon HUD and the native fallback. */

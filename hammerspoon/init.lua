@@ -1,8 +1,24 @@
--- Hyper-layer HUD. Triggered by Karabiner via:
---   open -g "hammerspoon://hyperhud?text=<url-encoded multi-line text>"
--- (macOS lowercases URL hosts, so the handler name must be lowercase.)
--- Renders a centered rounded card that auto-fades. Karabiner owns the text,
--- so remapping apps in karabiner_rules/src/hyper_apps.ts updates this for free.
+-- Hyper-layer HUD. RETIRED from active use 2026-09-07 (kept for a way back):
+-- the Karabiner hyper layer was flattened to direct Hyper+key app launches,
+-- so nothing triggers "hyperhud" today. The handlers below stay registered
+-- and the mute toast still shares this card renderer.
+--
+-- How it was wired from karabiner_rules (restore by reverting
+-- src/caps_lock_mods.ts to the hyperLayer version):
+--   * caps_lock_mods.ts built `hyperLayer("o", ...)` with
+--     `.leaderMode({ escape = ["escape", "spacebar", "caps_lock", "o"] })`;
+--     its configKey fired `open -g "hammerspoon://hyperhud?text=<url-encoded
+--     grid>"` on layer entry (or Karabiner's native notification when
+--     KW_NOTIFY=native, see scripts/check-hammerspoon.mjs).
+--   * The grid text came from buildHudText() in src/lib/hyper_layer.ts,
+--     a padEnd-aligned 2-column monospace layout of the hyperApps list --
+--     which is why this HUD's font must stay Menlo.
+--   * Each app key ran `open -g "hammerspoon://hyperhide" ; open -a App.app`
+--     in ONE shell_command (a second adjacent shell_command to-event is
+--     dropped by Karabiner's executor); layer keys are consumed, so the
+--     hyperhide URL was the only way to dismiss the card.
+-- (macOS lowercases URL hosts, so the handler names must be lowercase.)
+-- Renders a centered rounded card that auto-fades.
 
 local FADE = 0.12 -- fade in/out, seconds
 local BACKSTOP = 8.0 -- safety auto-hide if the keypress watcher can't run

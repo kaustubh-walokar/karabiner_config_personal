@@ -1,28 +1,19 @@
-import { rule, map, hyperLayer } from "karabiner.ts";
-import { hyperManipulators, hyperHudText } from "./hyper_apps";
+import { rule, map } from "karabiner.ts";
+import { hyperDirectManipulators } from "./hyper_apps";
 
-// KW_NOTIFY=native uses Karabiner's built-in notification box instead of the
-// Hammerspoon HUD (set by the predeploy gate when Hammerspoon isn't present).
-const useNative = process.env.KW_NOTIFY === "native";
-const hudUrl = `hammerspoon://hyperhud?text=${encodeURIComponent(
-  hyperHudText
-)}`;
-
-const hyper = hyperLayer("o", "Open Apps with Hyper")
-  .description("Open Apps with Hyper")
-  .leaderMode({ escape: ["escape", "spacebar", "caps_lock", "o"] });
-
-if (useNative) {
-  hyper.notification(hyperHudText);
-} else {
-  hyper.configKey((k) => k.to$(`open -g "${hudUrl}"`));
-}
-
+// Hyper+key launches apps DIRECTLY (no leader layer). The previous
+// hyperLayer("o") leader — with its Hammerspoon HUD via
+// `open -g "hammerspoon://hyperhud?text=..."` and leaderMode escapes —
+// was retired 2026-09-07; hyper_apps.ts still exports hyperManipulators
+// and hyperHudText if the layer ever needs restoring, and the HUD
+// renderer remains in hammerspoon/init.lua.
 export const rules = [
   rule("Caps Lock → Hyper/Escape")
     .description(
       "Caps Lock is escape if pressed alone or hyper when pressed with modifier."
     )
     .manipulators([map("caps_lock").toHyper().toIfAlone("escape")]),
-  hyper.manipulators(hyperManipulators),
+  rule("Hyper+key → launch app")
+    .description("Direct app launch on Hyper")
+    .manipulators(hyperDirectManipulators),
 ];

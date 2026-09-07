@@ -1,6 +1,14 @@
-import { to$ } from "karabiner.ts";
+import { map, to$ } from "karabiner.ts";
+import type { FromKeyParam } from "karabiner.ts";
 
 export type HyperApp = { key: string; app: string; label?: string };
+
+// Direct mode: Hyper+key launches the app immediately, no leader layer and
+// no HUD. The layer builders below are kept for an easy way back.
+export const buildDirectManipulators = (apps: HyperApp[]) =>
+  apps.map(({ key, app }) =>
+    map(key as FromKeyParam, "Hyper").to$(`open -a "${app}".app`)
+  );
 
 // Karabiner consumes layer keys, so a pressed app key emits no real key event;
 // dismiss the HUD here. Both actions go in ONE shell_command — a second
