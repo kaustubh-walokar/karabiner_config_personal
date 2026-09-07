@@ -1,15 +1,42 @@
--- Trackpad gestures via the vendored Swipe.spoon (MIT, mogenson/Swipe.spoon,
--- which reads three-finger swipes from hs.eventtap gesture events):
--- three-finger swipe up opens OmniWM's Overview through the CLI. Once per
--- swipe: the first crossing of THRESHOLD fires, then the gesture latches
--- until the fingers lift (new swipe id).
+-- Trackpad three-finger gestures via the vendored Swipe.spoon (MIT,
+-- mogenson/Swipe.spoon, which reads swipes from hs.eventtap gesture events).
 --
--- NOTE: set System Settings > Trackpad > More Gestures > Mission Control to
--- four fingers or off; on its default three-finger setting macOS fires
--- Mission Control on the same swipe and both overviews open.
+-- Actions and gestures are separate, mirroring mouse_gestures.lua: ACTIONS
+-- maps a name to a zero-arg function, GESTURES maps a swipe direction to an
+-- action name. One action per swipe: the first crossing of THRESHOLD fires,
+-- then the gesture latches until the fingers lift (new swipe id).
+--
+-- NOTE: in System Settings > Trackpad > More Gestures, keep Mission Control
+-- and "Swipe between full-screen applications" OFF three fingers (four
+-- fingers or off), or macOS fires its own gesture on top of these.
 
 local OMNIWMCTL = "/Applications/OmniWM.app/Contents/MacOS/omniwmctl"
-local THRESHOLD = 0.2 -- fraction of trackpad height the swipe must travel
+
+-- Configuration --------------------------------------------------------------
+local NATURAL_SCROLLING = true -- content follows the hand, like macOS spaces
+local THRESHOLD = 0.2 -- fraction of trackpad the swipe must travel
+
+-- Returns an action that runs omniwmctl with the given arguments.
+-- Requires general.ipcEnabled = true in OmniWM's settings.toml.
+local function omniwm(...)
+  local args = { ... }
+  return function()
+    hs.task.new(OMNIWMCTL, nil, args):start()
+  end
+end
+
+local ACTIONS = {
+  overview = omniwm("command", "toggle-overview"),
+  workspacePrev = omniwm("command", "switch-workspace", "prev"),
+  workspaceNext = omniwm("command", "switch-workspace", "next"),
+}
+
+local GESTURES = {
+  up = "overview", -- OmniWM's present-all-windows
+  left = NATURAL_SCROLLING and "workspaceNext" or "workspacePrev",
+  right = NATURAL_SCROLLING and "workspacePrev" or "workspaceNext",
+}
+--------------------------------------------------------------------------------
 
 local swipe = hs.loadSpoon("Swipe")
 
@@ -18,9 +45,13 @@ swipe:start(3, function(direction, distance, id)
   if id ~= currentId then
     currentId, fired = id, false
   end
-  if not fired and direction == "up" and distance > THRESHOLD then
+  if fired or distance <= THRESHOLD then
+    return
+  end
+  local action = ACTIONS[GESTURES[direction] or false]
+  if action then
     fired = true
-    hs.task.new(OMNIWMCTL, nil, { "command", "toggle-overview" }):start()
+    action()
   end
 end)
 
