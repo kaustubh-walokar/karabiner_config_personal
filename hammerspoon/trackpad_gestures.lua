@@ -14,7 +14,7 @@ local OMNIWMCTL = "/Applications/OmniWM.app/Contents/MacOS/omniwmctl"
 
 -- Configuration --------------------------------------------------------------
 local NATURAL_SCROLLING = true -- content follows the hand, like macOS spaces
-local THRESHOLD = 0.2 -- default fraction of trackpad the swipe must travel
+local THRESHOLD = 0.1 -- default fraction of trackpad the swipe must travel
 -- Four fingers: three-finger horizontal motion belongs to OmniWM's niri
 -- column scroll (gestures.fingerCount = 3), so these gestures live one
 -- finger up to avoid overlapping it.
