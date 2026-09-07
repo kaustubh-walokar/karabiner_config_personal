@@ -15,10 +15,10 @@ local OMNIWMCTL = "/Applications/OmniWM.app/Contents/MacOS/omniwmctl"
 -- Configuration --------------------------------------------------------------
 local NATURAL_SCROLLING = true -- content follows the hand, like macOS spaces
 local THRESHOLD = 0.2 -- default fraction of trackpad the swipe must travel
--- Horizontal three-finger motion is also OmniWM's niri column scroll
--- (gestures.fingerCount = 3), so left/right demand a much longer swipe:
--- short swipes scroll columns, a long one switches workspace.
-local LONG_THRESHOLD = 0.45
+-- Four fingers: three-finger horizontal motion belongs to OmniWM's niri
+-- column scroll (gestures.fingerCount = 3), so these gestures live one
+-- finger up to avoid overlapping it.
+local FINGERS = 4
 
 -- Returns an action that runs omniwmctl with the given arguments.
 -- Requires general.ipcEnabled = true in OmniWM's settings.toml.
@@ -38,21 +38,15 @@ local ACTIONS = {
 -- action name, plus an optional per-direction threshold override.
 local GESTURES = {
   up = { action = "overview" }, -- OmniWM's present-all-windows
-  left = {
-    action = NATURAL_SCROLLING and "workspaceNext" or "workspacePrev",
-    threshold = LONG_THRESHOLD,
-  },
-  right = {
-    action = NATURAL_SCROLLING and "workspacePrev" or "workspaceNext",
-    threshold = LONG_THRESHOLD,
-  },
+  left = { action = NATURAL_SCROLLING and "workspaceNext" or "workspacePrev" },
+  right = { action = NATURAL_SCROLLING and "workspacePrev" or "workspaceNext" },
 }
 --------------------------------------------------------------------------------
 
 local swipe = hs.loadSpoon("Swipe")
 
 local currentId, fired
-swipe:start(3, function(direction, distance, id)
+swipe:start(FINGERS, function(direction, distance, id)
   if id ~= currentId then
     currentId, fired = id, false
   end
