@@ -14,7 +14,11 @@ local OMNIWMCTL = "/Applications/OmniWM.app/Contents/MacOS/omniwmctl"
 
 -- Configuration --------------------------------------------------------------
 local NATURAL_SCROLLING = true -- content follows the hand, like macOS spaces
-local THRESHOLD = 0.2 -- fraction of trackpad the swipe must travel
+local THRESHOLD = 0.2 -- default fraction of trackpad the swipe must travel
+-- Horizontal three-finger motion is also OmniWM's niri column scroll
+-- (gestures.fingerCount = 3), so left/right demand a much longer swipe:
+-- short swipes scroll columns, a long one switches workspace.
+local LONG_THRESHOLD = 0.6
 
 -- Returns an action that runs omniwmctl with the given arguments.
 -- Requires general.ipcEnabled = true in OmniWM's settings.toml.
@@ -31,10 +35,17 @@ local ACTIONS = {
   workspaceNext = omniwm("command", "switch-workspace", "next"),
 }
 
+-- action name, plus an optional per-direction threshold override.
 local GESTURES = {
-  up = "overview", -- OmniWM's present-all-windows
-  left = NATURAL_SCROLLING and "workspaceNext" or "workspacePrev",
-  right = NATURAL_SCROLLING and "workspacePrev" or "workspaceNext",
+  up = { action = "overview" }, -- OmniWM's present-all-windows
+  left = {
+    action = NATURAL_SCROLLING and "workspaceNext" or "workspacePrev",
+    threshold = LONG_THRESHOLD,
+  },
+  right = {
+    action = NATURAL_SCROLLING and "workspacePrev" or "workspaceNext",
+    threshold = LONG_THRESHOLD,
+  },
 }
 --------------------------------------------------------------------------------
 
@@ -45,10 +56,14 @@ swipe:start(3, function(direction, distance, id)
   if id ~= currentId then
     currentId, fired = id, false
   end
-  if fired or distance <= THRESHOLD then
+  if fired then
     return
   end
-  local action = ACTIONS[GESTURES[direction] or false]
+  local gesture = GESTURES[direction]
+  if not gesture or distance <= (gesture.threshold or THRESHOLD) then
+    return
+  end
+  local action = ACTIONS[gesture.action]
   if action then
     fired = true
     action()
