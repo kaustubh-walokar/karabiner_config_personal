@@ -23,7 +23,10 @@ mkdirSync(dir, { recursive: true });
 const link = (repoSrc, dest) => {
   const st = lstatSync(dest, { throwIfNoEntry: false });
   if (st) {
-    if (st.isSymbolicLink() && resolve(dirname(dest), readlinkSync(dest)) === repoSrc) {
+    if (
+      st.isSymbolicLink() &&
+      resolve(dirname(dest), readlinkSync(dest)) === repoSrc
+    ) {
       console.log("✓ Already linked:", dest, "->", repoSrc);
       return;
     }
@@ -44,7 +47,9 @@ const spoonsSrc = join(srcDir, "Spoons");
 if (lstatSync(spoonsSrc, { throwIfNoEntry: false })) {
   const spoonsDir = join(dir, "Spoons");
   mkdirSync(spoonsDir, { recursive: true });
-  for (const name of readdirSync(spoonsSrc).filter((f) => f.endsWith(".spoon"))) {
+  for (const name of readdirSync(spoonsSrc).filter((f) =>
+    f.endsWith(".spoon")
+  )) {
     link(join(spoonsSrc, name), join(spoonsDir, name));
   }
 }
