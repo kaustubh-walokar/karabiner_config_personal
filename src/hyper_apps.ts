@@ -13,7 +13,7 @@ import {
 export const hyperApps: HyperApp[] = [
   { key: "v", app: "Vivaldi" },
   { key: "s", app: "Slack" },
-  { key: "z", app: "Zoom" },
+  { key: "z", app: "zoom.us", label: "Zoom" },
   { key: "o", app: "Microsoft Outlook", label: "Mail" },
   { key: "c", app: "Cursor" },
   { key: "g", app: "Ghostty" },
