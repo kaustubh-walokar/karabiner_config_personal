@@ -317,8 +317,14 @@ hs.pathwatcher
 -- Global keeps the eventtap referenced so it survives garbage collection.
 mouseGestures = require("mouse_gestures")
 
--- Trackpad three-finger swipe gestures (Swipe.spoon based).
-trackpadGestures = require("trackpad_gestures")
+-- Trackpad swipe gestures (Swipe.spoon based). RETIRED 2026-09-19: OmniWM
+-- 0.7.0 ships native trackpad gestures that replace this module -- an
+-- interactive Overview swipe (gestures.overviewGestureEnabled, up to open,
+-- down to close, cancelable mid-flight) and horizontal workspace swipe
+-- (gestures.workspaceSwipe*), both on four fingers in settings.toml.
+-- trackpad_gestures.lua and Spoons/Swipe.spoon stay on disk; uncomment to
+-- bring the Hammerspoon version back.
+-- trackpadGestures = require("trackpad_gestures")
 
 -- Startup toast in the mute-HUD style (bold headline, receding detail,
 -- green dot, top-center card) instead of the stock hs.alert box. Fires
