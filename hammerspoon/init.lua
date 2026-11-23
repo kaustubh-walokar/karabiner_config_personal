@@ -317,6 +317,10 @@ hs.pathwatcher
 -- Global keeps the eventtap referenced so it survives garbage collection.
 mouseGestures = require("mouse_gestures")
 
+-- OmniWM cheat sheet: tap Command, then press and hold it. Global for the
+-- same reason as mouseGestures (keeps the eventtap and timers referenced).
+omniwmCheatsheet = require("omniwm_cheatsheet").start()
+
 -- Trackpad swipe gestures (Swipe.spoon based). RETIRED 2026-09-19: OmniWM
 -- 0.7.0 ships native trackpad gestures that replace this module -- an
 -- interactive Overview swipe (gestures.overviewGestureEnabled, up to open,
